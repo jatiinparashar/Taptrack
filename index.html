@@ -1,1307 +1,1064 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>TapTrack – Create Your Own Online Counter</title>
-
-    <meta name="description"
-          content="Create your own free online counter with TapTrack. Name your counter, set a goal and start counting instantly. No signup or download required.">
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            color: white;
-
-            min-height: 100vh;
-
-            background:
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(124,58,237,0.25),
-                    transparent 30%
-                ),
-
-                radial-gradient(
-                    circle at 90% 10%,
-                    rgba(79,70,229,0.20),
-                    transparent 30%
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #07070c,
-                    #10101a 55%,
-                    #171329
-                );
-
-            overflow-x: hidden;
-        }
-
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        header {
-
-            padding: 22px 7%;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            position: relative;
-
-            z-index: 10;
-        }
-
-
-        .logo {
-
-            font-size: 28px;
-
-            font-weight: 900;
-
-            letter-spacing: -1px;
-        }
-
-
-        .logo span {
-
-            color: #8b5cf6;
-        }
-
-
-        nav a {
-
-            color: #a1a1aa;
-
-            text-decoration: none;
-
-            margin-left: 24px;
-
-            font-size: 14px;
-
-            transition: 0.2s;
-        }
-
-
-        nav a:hover {
-
-            color: white;
-        }
-
-
-        /* =========================
-           HERO
-        ========================= */
-
-        .hero {
-
-            text-align: center;
-
-            padding: 75px 20px 45px;
-        }
-
-
-        .badge {
-
-            display: inline-block;
-
-            padding: 9px 17px;
-
-            border-radius: 50px;
-
-            background:
-                rgba(124,58,237,0.12);
-
-            border:
-                1px solid
-                rgba(139,92,246,0.3);
-
-            color: #c4b5fd;
-
-            font-size: 12px;
-
-            font-weight: bold;
-
-            margin-bottom: 25px;
-        }
-
-
-        .hero h1 {
-
-            font-size:
-                clamp(45px, 8vw, 80px);
-
-            line-height: 0.95;
-
-            letter-spacing: -4px;
-
-            margin-bottom: 25px;
-        }
-
-
-        .hero h1 span {
-
-            color: #8b5cf6;
-        }
-
-
-        .hero p {
-
-            max-width: 650px;
-
-            margin: auto;
-
-            color: #a1a1aa;
-
-            font-size: 18px;
-
-            line-height: 1.7;
-        }
-
-
-        /* =========================
-           CREATOR
-        ========================= */
-
-        .creator-section {
-
-            display: flex;
-
-            justify-content: center;
-
-            padding: 30px 20px 80px;
-        }
-
-
-        .creator-card {
-
-            width: min(94%, 620px);
-
-            padding: 35px;
-
-            border-radius: 30px;
-
-            background:
-                rgba(255,255,255,0.06);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-            box-shadow:
-                0 30px 80px
-                rgba(0,0,0,0.5);
-
-            backdrop-filter: blur(20px);
-        }
-
-
-        .creator-header {
-
-            text-align: center;
-
-            margin-bottom: 30px;
-        }
-
-
-        .creator-header h2 {
-
-            font-size: 28px;
-
-            margin-bottom: 8px;
-        }
-
-
-        .creator-header p {
-
-            color: #a1a1aa;
-
-            font-size: 14px;
-        }
-
-
-        /* =========================
-           FORM
-        ========================= */
-
-        .form-group {
-
-            margin-bottom: 20px;
-        }
-
-
-        .form-group label {
-
-            display: block;
-
-            color: #d4d4d8;
-
-            font-size: 13px;
-
-            font-weight: bold;
-
-            margin-bottom: 9px;
-        }
-
-
-        input {
-
-            width: 100%;
-
-            padding: 15px 16px;
-
-            border-radius: 14px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.10);
-
-            background:
-                rgba(0,0,0,0.25);
-
-            color: white;
-
-            outline: none;
-
-            font-size: 15px;
-
-            transition: 0.2s;
-        }
-
-
-        input:focus {
-
-            border-color: #8b5cf6;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(139,92,246,0.12);
-        }
-
-
-        .number-row {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 15px;
-        }
-
-
-        /* =========================
-           ICON PICKER
-        ========================= */
-
-        .emoji-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(8, 1fr);
-
-            gap: 8px;
-        }
-
-
-        .emoji {
-
-            height: 48px;
-
-            border-radius: 12px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
-
-            background:
-                rgba(255,255,255,0.04);
-
-            font-size: 22px;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            transition: 0.15s;
-        }
-
-
-        .emoji:hover {
-
-            background:
-                rgba(139,92,246,0.18);
-
-            transform: translateY(-2px);
-        }
-
-
-        .emoji.selected {
-
-            border-color: #8b5cf6;
-
-            background:
-                rgba(139,92,246,0.25);
-
-            box-shadow:
-                0 0 15px
-                rgba(139,92,246,0.2);
-        }
-
-
-        /* =========================
-           CREATE BUTTON
-        ========================= */
-
-        .create-button {
-
-            width: 100%;
-
-            padding: 17px;
-
-            border: none;
-
-            border-radius: 15px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #7c3aed,
-                    #4f46e5
-                );
-
-            color: white;
-
-            font-size: 16px;
-
-            font-weight: 800;
-
-            cursor: pointer;
-
-            margin-top: 8px;
-
-            box-shadow:
-                0 15px 35px
-                rgba(124,58,237,0.3);
-
-            transition: 0.2s;
-        }
-
-
-        .create-button:hover {
-
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 20px 45px
-                rgba(124,58,237,0.45);
-        }
-
-
-        /* =========================
-           COUNTER
-        ========================= */
-
-        .counter-section {
-
-            display: none;
-
-            justify-content: center;
-
-            padding: 20px 20px 90px;
-        }
-
-
-        .counter-card {
-
-            width: min(94%, 620px);
-
-            padding: 40px 30px;
-
-            text-align: center;
-
-            border-radius: 30px;
-
-            background:
-                rgba(255,255,255,0.07);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.13);
-
-            box-shadow:
-                0 30px 80px
-                rgba(0,0,0,0.55);
-
-            backdrop-filter: blur(20px);
-        }
-
-
-        .counter-icon {
-
-            font-size: 65px;
-
-            margin-bottom: 10px;
-
-            animation:
-                floating 3s
-                ease-in-out
-                infinite;
-        }
-
-
-        @keyframes floating {
-
-            0%,100% {
-
-                transform:
-                    translateY(0);
-            }
-
-            50% {
-
-                transform:
-                    translateY(-8px);
-            }
-        }
-
-
-        .counter-name {
-
-            font-size: 14px;
-
-            color: #a78bfa;
-
-            font-weight: bold;
-
-            letter-spacing: 2px;
-
-            text-transform: uppercase;
-
-            margin-bottom: 12px;
-        }
-
-
-        #count {
-
-            font-size: 105px;
-
-            font-weight: 900;
-
-            letter-spacing: -5px;
-
-            line-height: 1;
-
-            margin: 10px 0 32px;
-        }
-
-
-        .tap-row {
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 12px;
-        }
-
-
-        .side-button {
-
-            width: 60px;
-
-            height: 60px;
-
-            border: none;
-
-            border-radius: 18px;
-
-            background: #27213f;
-
-            color: #c4b5fd;
-
-            font-size: 26px;
-
-            cursor: pointer;
-
-            transition: 0.15s;
-        }
-
-
-        .side-button:hover {
-
-            background: #352b54;
-        }
-
-
-        .side-button:active {
-
-            transform: scale(0.9);
-        }
-
-
-        .tap-button {
-
-            width: 190px;
-
-            height: 70px;
-
-            border: none;
-
-            border-radius: 20px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #7c3aed,
-                    #4f46e5
-                );
-
-            color: white;
-
-            font-size: 19px;
-
-            font-weight: 900;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 15px 35px
-                rgba(124,58,237,0.4);
-
-            transition: 0.15s;
-        }
-
-
-        .tap-button:hover {
-
-            transform:
-                translateY(-3px)
-                scale(1.02);
-        }
-
-
-        .tap-button:active {
-
-            transform:
-                scale(0.94);
-        }
-
-
-        /* =========================
-           PROGRESS
-        ========================= */
-
-        .goal {
-
-            margin-top: 32px;
-        }
-
-
-        .goal-header {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            margin-bottom: 10px;
-
-            color: #a1a1aa;
-
-            font-size: 13px;
-        }
-
-
-        .progress {
-
-            height: 12px;
-
-            background: #27272a;
-
-            border-radius: 50px;
-
-            overflow: hidden;
-        }
-
-
-        #progressBar {
-
-            height: 100%;
-
-            width: 0%;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #7c3aed,
-                    #a78bfa
-                );
-
-            border-radius: 50px;
-
-            transition:
-                width 0.3s;
-        }
-
-
-        #message {
-
-            margin-top: 15px;
-
-            color: #c4b5fd;
-
-            font-size: 14px;
-
-            font-weight: bold;
-        }
-
-
-        /* =========================
-           ACTIONS
-        ========================= */
-
-        .actions {
-
-            display: flex;
-
-            justify-content: center;
-
-            flex-wrap: wrap;
-
-            gap: 9px;
-
-            margin-top: 23px;
-        }
-
-
-        .action-button {
-
-            border: none;
-
-            padding: 11px 15px;
-
-            border-radius: 11px;
-
-            background: #211c31;
-
-            color: #c4b5fd;
-
-            cursor: pointer;
-
-            font-size: 13px;
-
-            transition: 0.15s;
-        }
-
-
-        .action-button:hover {
-
-            background: #30274a;
-        }
-
-
-        /* =========================
-           SAVED COUNTERS
-        ========================= */
-
-        .saved-section {
-
-            max-width: 950px;
-
-            margin: auto;
-
-            padding: 0 20px 90px;
-
-            display: none;
-        }
-
-
-        .saved-title {
-
-            text-align: center;
-
-            margin-bottom: 25px;
-        }
-
-
-        .saved-title h2 {
-
-            font-size: 30px;
-
-            margin-bottom: 7px;
-        }
-
-
-        .saved-title p {
-
-            color: #a1a1aa;
-
-            font-size: 14px;
-        }
-
-
-        .saved-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 15px;
-        }
-
-
-        .saved-card {
-
-            padding: 22px;
-
-            border-radius: 20px;
-
-            background:
-                rgba(255,255,255,0.05);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
-
-            transition: 0.2s;
-        }
-
-
-        .saved-card:hover {
-
-            transform:
-                translateY(-4px);
-
-            background:
-                rgba(255,255,255,0.08);
-        }
-
-
-        .saved-card-top {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            margin-bottom: 15px;
-        }
-
-
-        .saved-icon {
-
-            font-size: 30px;
-        }
-
-
-        .saved-name {
-
-            font-weight: bold;
-
-            word-break: break-word;
-        }
-
-
-        .saved-count {
-
-            font-size: 30px;
-
-            font-weight: 900;
-
-            margin-bottom: 14px;
-        }
-
-
-        .saved-buttons {
-
-            display: flex;
-
-            gap: 7px;
-        }
-
-
-        .saved-buttons button {
-
-            flex: 1;
-
-            padding: 9px;
-
-            border: none;
-
-            border-radius: 9px;
-
-            background: #252039;
-
-            color: #c4b5fd;
-
-            cursor: pointer;
-
-            font-size: 12px;
-        }
-
-
-        .saved-buttons button:hover {
-
-            background: #352b54;
-        }
-
-
-        /* =========================
-           HOW IT WORKS
-        ========================= */
-
-        .how {
-
-            padding: 90px 20px;
-
-            text-align: center;
-
-            border-top:
-                1px solid
-                rgba(255,255,255,0.06);
-        }
-
-
-        .how h2 {
-
-            font-size: 38px;
-
-            margin-bottom: 12px;
-        }
-
-
-        .how-sub {
-
-            color: #a1a1aa;
-
-            margin-bottom: 45px;
-        }
-
-
-        .steps {
-
-            max-width: 950px;
-
-            margin: auto;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3,1fr);
-
-            gap: 20px;
-        }
-
-
-        .step {
-
-            padding: 30px 20px;
-
-            border-radius: 22px;
-
-            background:
-                rgba(255,255,255,0.04);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.07);
-        }
-
-
-        .step-number {
-
-            width: 45px;
-
-            height: 45px;
-
-            margin: 0 auto 18px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background:
-                rgba(124,58,237,0.2);
-
-            color: #c4b5fd;
-
-            font-weight: 900;
-        }
-
-
-        .step h3 {
-
-            margin-bottom: 8px;
-        }
-
-
-        .step p {
-
-            color: #a1a1aa;
-
-            font-size: 13px;
-
-            line-height: 1.6;
-        }
-
-
-        /* =========================
-           ABOUT
-        ========================= */
-
-        .about {
-
-            max-width: 750px;
-
-            margin: auto;
-
-            text-align: center;
-
-            padding: 20px 20px 90px;
-        }
-
-
-        .about h2 {
-
-            font-size: 32px;
-
-            margin-bottom: 18px;
-        }
-
-
-        .about p {
-
-            color: #a1a1aa;
-
-            line-height: 1.8;
-
-            font-size: 15px;
-        }
-
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-
-            border-top:
-                1px solid
-                rgba(255,255,255,0.07);
-
-            padding: 30px 20px;
-
-            text-align: center;
-
-            color: #71717a;
-
-            font-size: 13px;
-        }
-
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 700px) {
-
-            header {
-
-                padding: 20px;
-            }
-
-
-            nav a {
-
-                margin-left: 10px;
-            }
-
-
-            .hero {
-
-                padding-top: 50px;
-            }
-
-
-            .hero h1 {
-
-                letter-spacing: -2px;
-            }
-
-
-            .creator-card {
-
-                padding: 27px 18px;
-            }
-
-
-            .emoji-grid {
-
-                grid-template-columns:
-                    repeat(4,1fr);
-            }
-
-
-            .number-row {
-
-                grid-template-columns:
-                    1fr;
-            }
-
-
-            .counter-card {
-
-                padding:
-                    32px 18px;
-            }
-
-
-            #count {
-
-                font-size: 82px;
-            }
-
-
-            .tap-button {
-
-                width: 150px;
-            }
-
-
-            .saved-grid {
-
-                grid-template-columns:
-                    1fr;
-            }
-
-
-            .steps {
-
-                grid-template-columns:
-                    1fr;
-            }
-        }
-
-
-        @media (max-width: 400px) {
-
-            .tap-button {
-
-                width: 135px;
-            }
-
-
-            .side-button {
-
-                width: 52px;
-
-                height: 55px;
-            }
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TapTrack – Create Your Own Counter</title>
+
+<meta name="description" content="Create your own free online counter. Name it, set a goal and start counting instantly with TapTrack.">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+color:#fff;
+background:#08080d;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+border-radius:50%;
+background:#6d28d9;
+filter:blur(150px);
+opacity:.22;
+top:-200px;
+left:-180px;
+pointer-events:none;
+}
+
+body:after{
+content:"";
+position:fixed;
+width:450px;
+height:450px;
+border-radius:50%;
+background:#2563eb;
+filter:blur(160px);
+opacity:.14;
+right:-180px;
+top:150px;
+pointer-events:none;
+}
+
+header{
+max-width:1100px;
+margin:auto;
+padding:24px 22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:27px;
+font-weight:900;
+letter-spacing:-1px;
+}
+
+.logo span{color:#8b5cf6}
+
+nav a{
+color:#aaa;
+text-decoration:none;
+font-size:14px;
+margin-left:22px;
+}
+
+nav a:hover{color:#fff}
+
+.hero{
+text-align:center;
+padding:70px 20px 35px;
+position:relative;
+}
+
+.badge{
+display:inline-block;
+padding:8px 15px;
+border:1px solid #31205c;
+background:#151020;
+border-radius:30px;
+font-size:12px;
+color:#c4b5fd;
+margin-bottom:25px;
+}
+
+.hero h1{
+font-size:clamp(46px,8vw,82px);
+line-height:.95;
+letter-spacing:-4px;
+margin-bottom:22px;
+}
+
+.hero h1 span{
+color:#8b5cf6;
+}
+
+.hero p{
+max-width:620px;
+margin:auto;
+color:#999;
+font-size:17px;
+line-height:1.7;
+}
+
+.creator-wrap{
+max-width:620px;
+margin:30px auto 80px;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,.055);
+border:1px solid rgba(255,255,255,.1);
+border-radius:28px;
+padding:32px;
+box-shadow:0 25px 80px rgba(0,0,0,.45);
+backdrop-filter:blur(15px);
+}
+
+.card h2{
+text-align:center;
+font-size:27px;
+margin-bottom:8px;
+}
+
+.card-sub{
+text-align:center;
+color:#888;
+font-size:14px;
+margin-bottom:28px;
+}
+
+label{
+display:block;
+font-size:13px;
+font-weight:bold;
+color:#ccc;
+margin-bottom:8px;
+}
+
+input{
+width:100%;
+padding:15px;
+border-radius:13px;
+border:1px solid #292531;
+background:#0d0c12;
+color:#fff;
+font-size:15px;
+outline:none;
+margin-bottom:20px;
+}
+
+input:focus{
+border-color:#8b5cf6;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.emojis{
+display:grid;
+grid-template-columns:repeat(8,1fr);
+gap:7px;
+margin-bottom:22px;
+}
+
+.emoji{
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:11px;
+background:#111019;
+border:1px solid #24212d;
+font-size:21px;
+cursor:pointer;
+}
+
+.emoji:hover,
+.emoji.active{
+background:#28174b;
+border-color:#8b5cf6;
+}
+
+.create{
+width:100%;
+padding:17px;
+border:0;
+border-radius:14px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+color:white;
+font-size:16px;
+font-weight:800;
+cursor:pointer;
+box-shadow:0 15px 35px rgba(124,58,237,.3);
+}
+
+.create:hover{
+transform:translateY(-2px);
+}
+
+.counter-area{
+display:none;
+max-width:620px;
+margin:0 auto 80px;
+padding:20px;
+}
+
+.counter-card{
+text-align:center;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.11);
+border-radius:30px;
+padding:38px 25px;
+box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
+
+.icon{
+font-size:62px;
+margin-bottom:10px;
+}
+
+.name{
+font-size:14px;
+letter-spacing:2px;
+color:#a78bfa;
+font-weight:bold;
+text-transform:uppercase;
+margin-bottom:10px;
+}
+
+.count{
+font-size:100px;
+font-weight:900;
+letter-spacing:-5px;
+margin-bottom:30px;
+}
+
+.tap-row{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+}
+
+.side,.tap{
+border:0;
+cursor:pointer;
+color:#fff;
+font-weight:900;
+}
+
+.side{
+width:58px;
+height:58px;
+border-radius:16px;
+background:#211b32;
+font-size:25px;
+}
+
+.tap{
+width:185px;
+height:68px;
+border-radius:19px;
+font-size:18px;
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+box-shadow:0 12px 30px rgba(124,58,237,.35);
+}
+
+.side:active,.tap:active{
+transform:scale(.93);
+}
+
+.goal{
+margin-top:30px;
+text-align:left;
+}
+
+.goal-top{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+color:#999;
+margin-bottom:9px;
+}
+
+.progress{
+height:11px;
+background:#242229;
+border-radius:20px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0;
+background:linear-gradient(90deg,#7c3aed,#a78bfa);
+transition:.3s;
+}
+
+.message{
+text-align:center;
+color:#c4b5fd;
+font-size:14px;
+font-weight:bold;
+margin-top:15px;
+}
+
+.actions{
+display:flex;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+margin-top:22px;
+}
+
+.action{
+border:0;
+background:#211b32;
+color:#c4b5fd;
+padding:10px 14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.action:hover{
+background:#30264a;
+}
+
+.saved{
+display:none;
+max-width:1000px;
+margin:0 auto 90px;
+padding:20px;
+}
+
+.saved h2{
+text-align:center;
+font-size:32px;
+margin-bottom:8px;
+}
+
+.saved p{
+text-align:center;
+color:#888;
+font-size:14px;
+margin-bottom:28px;
+}
+
+.saved-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.saved-card{
+background:#111016;
+border:1px solid #24212d;
+border-radius:20px;
+padding:20px;
+}
+
+.saved-top{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:12px;
+}
+
+.saved-icon{font-size:30px}
+
+.saved-name{
+font-weight:bold;
+word-break:break-word;
+}
+
+.saved-count{
+font-size:30px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.saved-buttons{
+display:flex;
+gap:7px;
+}
+
+.saved-buttons button{
+flex:1;
+padding:9px;
+border:0;
+border-radius:9px;
+background:#211b32;
+color:#c4b5fd;
+cursor:pointer;
+}
+
+.how{
+border-top:1px solid #18171e;
+padding:80px 20px;
+text-align:center;
+}
+
+.how h2{
+font-size:36px;
+margin-bottom:10px;
+}
+
+.how>p{
+color:#888;
+margin-bottom:40px;
+}
+
+.steps{
+max-width:950px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.step{
+padding:28px 20px;
+border:1px solid #211f28;
+border-radius:20px;
+background:#0e0d12;
+}
+
+.number{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#251640;
+color:#c4b5fd;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 15px;
+font-weight:bold;
+}
+
+.step h3{margin-bottom:8px}
+
+.step p{
+font-size:13px;
+line-height:1.6;
+color:#888;
+}
+
+.about{
+max-width:720px;
+margin:auto;
+padding:20px 20px 90px;
+text-align:center;
+}
+
+.about h2{
+font-size:30px;
+margin-bottom:15px;
+}
+
+.about p{
+color:#888;
+line-height:1.8;
+font-size:15px;
+}
+
+footer{
+border-top:1px solid #18171e;
+text-align:center;
+padding:28px;
+color:#666;
+font-size:13px;
+}
+
+@media(max-width:700px){
+
+nav a{margin-left:10px}
+
+.hero{
+padding-top:45px;
+}
+
+.hero h1{
+letter-spacing:-2px;
+}
+
+.card{
+padding:25px 18px;
+}
+
+.emojis{
+grid-template-columns:repeat(4,1fr);
+}
+
+.row{
+grid-template-columns:1fr;
+gap:0;
+}
+
+.count{
+font-size:78px;
+}
+
+.tap{
+width:145px;
+}
+
+.saved-grid,
+.steps{
+grid-template-columns:1fr;
+}
+
+}
+</style>
 </head>
-
 
 <body>
 
-
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
 
-    <div class="logo">
-        Tap<span>Track</span>
-    </div>
+<div class="logo">
+Tap<span>Track</span>
+</div>
 
-    <nav>
-
-        <a href="#how">
-            How it works
-        </a>
-
-        <a href="#about">
-            About
-        </a>
-
-    </nav>
+<nav>
+<a href="#how">How it works</a>
+<a href="#about">About</a>
+</nav>
 
 </header>
 
 
-<!-- =========================
-     HERO
-========================= -->
-
 <section class="hero">
 
-    <div class="badge">
-        ⚡ FREE • NO SIGNUP • NO DOWNLOAD
-    </div>
+<div class="badge">
+⚡ FREE • NO SIGNUP • NO DOWNLOAD
+</div>
 
+<h1>
+Create your own.<br>
+<span>Count anything.</span>
+</h1>
 
-    <h1>
-
-        Create your own.<br>
-
-        <span>Count anything.</span>
-
-    </h1>
-
-
-    <p>
-
-        TapTrack lets you create a custom counter
-        for whatever you want to count.
-        Give it a name, set a goal and start tapping.
-
-    </p>
+<p>
+Create a counter for anything you want.
+Give it a name, choose an icon, set a goal
+and start tracking instantly.
+</p>
 
 </section>
 
 
-<!-- =========================
-     CREATOR
-========================= -->
+<section class="creator-wrap" id="creator">
 
-<section
-    class="creator-section"
-    id="creator">
+<div class="card">
 
+<h2>✨ Create Your Counter</h2>
 
-    <div class="creator-card">
+<p class="card-sub">
+Make a counter that's completely yours.
+</p>
 
+<label>What are you counting?</label>
 
-        <div class="creator-header">
+<input
+id="counterName"
+placeholder="e.g. Push-ups, Books, Water..."
+maxlength="30"
+>
 
-            <h2>
-                ✨ Create Your Counter
-            </h2>
+<div class="row">
 
-            <p>
-                Make a counter that's completely yours.
-            </p>
+<div>
+<label>Starting Count</label>
+<input id="start" type="number" value="0" min="0">
+</div>
 
-        </div>
+<div>
+<label>Your Goal</label>
+<input id="goal" type="number" value="100" min="1">
+</div>
 
+</div>
 
-        <!-- NAME -->
+<label>Choose an icon</label>
 
-        <div class="form-group">
+<div class="emojis">
 
-            <label>
-                What are you counting?
-            </label>
+<div class="emoji active">👆</div>
+<div class="emoji">👊</div>
+<div class="emoji">💪</div>
+<div class="emoji">🔥</div>
+<div class="emoji">⭐</div>
+<div class="emoji">🎯</div>
+<div class="emoji">📚</div>
+<div class="emoji">💧</div>
 
-            <input
-                type="text"
-                id="counterName"
-                placeholder="e.g. Push-ups, Books, Water..."
-                maxlength="30">
+</div>
 
-        </div>
+<button class="create" onclick="createCounter()">
+🚀 Create My Counter
+</button>
 
+</div>
 
-        <!-- NUMBERS -->
-
-        <div class="number-row">
-
-
-            <div class="form-group">
-
-                <label>
-                    Starting Count
-                </label>
-
-                <input
-                    type="number"
-                    id="startingCount"
-                    value="0"
-                    min="0">
-
-            </div>
+</section>
 
 
-            <div class="form-group">
+<section class="counter-area" id="counterArea">
 
-                <label>
-                    Goal
-                </label>
+<div class="counter-card">
 
-                <input
-                    type="number"
-                    id="goalInput"
-                    value="100"
-                    min="1">
+<div class="icon" id="icon">👆</div>
 
-            </div>
+<div class="name" id="counterTitle">
+MY COUNTER
+</div>
+
+<div class="count" id="count">0</div>
+
+<div class="tap-row">
+
+<button class="side" onclick="minus()">−</button>
+
+<button class="tap" onclick="plus()">TAP</button>
+
+<button class="side" onclick="plus()">+</button>
+
+</div>
+
+<div class="goal">
+
+<div class="goal-top">
+
+<span>🎯 GOAL</span>
+
+<span id="goalText">0 / 100</span>
+
+</div>
+
+<div class="progress">
+
+<div class="bar" id="bar"></div>
+
+</div>
+
+</div>
+
+<div class="message" id="message">
+Ready? Let's start! 🚀
+</div>
+
+<div class="actions">
+
+<button class="action" onclick="save()">
+💾 Save
+</button>
+
+<button class="action" onclick="reset()">
+🔄 Reset
+</button>
+
+<button class="action" onclick="edit()">
+✏️ Edit
+</button>
+
+<button class="action" onclick="newCounter()">
+➕ New
+</button>
+
+</div>
+
+</div>
+
+</section>
 
 
-        </div>
+<section class="saved" id="saved">
+
+<h2>Your Counters</h2>
+
+<p>
+Saved on this device automatically.
+</p>
+
+<div class="saved-grid" id="savedGrid"></div>
+
+</section>
 
 
-        <!-- ICON -->
+<section class="how" id="how">
 
-        <div class="form-group">
+<h2>How TapTrack Works</h2>
 
-            <label>
-                Choose an icon
-            </label>
+<p>Three simple steps.</p>
+
+<div class="steps">
+
+<div class="step">
+
+<div class="number">1</div>
+
+<h3>Create</h3>
+
+<p>
+Give your counter a name,
+choose an icon and set your goal.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="number">2</div>
+
+<h3>Count</h3>
+
+<p>
+Press TAP or use the spacebar
+to increase your count.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="number">3</div>
+
+<h3>Track</h3>
+
+<p>
+Watch your progress and
+reach your target.
+</p>
+
+</div>
+
+</div>
+
+</section>
 
 
-            <div class="emoji-grid">
+<section class="about" id="about">
 
-                <div class="emoji selected"
-                     data-emoji="👆">
-                    👆
-                </div>
+<h2>One Counter. Anything You Want.</h2>
 
-                <div class="emoji"
-                     data-emoji="👊">
-                    👊
-                </div>
+<p>
+TapTrack is a simple and flexible online
+counter. Create your own counter for workouts,
+habits, tasks, games, challenges, tallies or
+anything else you want to track.
+</p>
 
-                <div class="emoji"
-      
+</section>
+
+
+<footer>
+© 2026 TapTrack · Create. Count. Track.
+</footer>
+
+
+<script>
+
+let count=0;
+let goal=100;
+let name="My Counter";
+let icon="👆";
+
+
+const emojis=document.querySelectorAll(".emoji");
+
+emojis.forEach(e=>{
+e.onclick=()=>{
+
+emojis.forEach(x=>x.classList.remove("active"));
+
+e.classList.add("active");
+
+icon=e.textContent;
+
+};
+});
+
+
+function createCounter(){
+
+let n=document.getElementById("counterName").value.trim();
+
+if(!n){
+alert("Please enter a counter name.");
+return;
+}
+
+name=n;
+
+count=Math.max(0,Number(document.getElementById("start").value)||0);
+
+goal=Math.max(1,Number(document.getElementById("goal").value)||100);
+
+show();
+
+save();
+
+}
+
+
+function show(){
+
+document.getElementById("counterArea").style.display="block";
+
+document.getElementById("icon").textContent=icon;
+
+document.getElementById("counterTitle").textContent=name;
+
+update();
+
+document.getElementById("counterArea").scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+function update(){
+
+document.getElementById("count").textContent=count;
+
+document.getElementById("goalText").textContent=count+" / "+goal;
+
+let percent=Math.min(100,(count/goal)*100);
+
+document.getElementById("bar").style.width=percent+"%";
+
+let m=document.getElementById("message");
+
+if(count===0)m.textContent="Ready? Let's start! 🚀";
+
+else if(count>=goal)m.textContent="GOAL CRUSHED! 🏆🔥";
+
+else if(count>=goal*.75)m.textContent="Almost there! 😤";
+
+else if(count>=goal*.5)m.textContent="More than halfway! 🔥";
+
+else m.textContent="Keep going! 👊";
+
+}
+
+
+function plus(){
+
+count++;
+
+update();
+
+save();
+
+}
+
+
+function minus(){
+
+if(count>0)count--;
+
+update();
+
+save();
+
+}
+
+
+function reset(){
+
+count=0;
+
+update();
+
+save();
+
+document.getElementById("message").textContent="Reset! Ready again? 🔄";
+
+}
+
+
+function edit(){
+
+let n=prompt("Counter name:",name);
+
+if(n&&n.trim())name=n.trim();
+
+let g=prompt("Goal:",goal);
+
+if(g&&!isNaN(g)&&Number(g)>0)goal=Number(g);
+
+document.getElementById("counterTitle").textContent=name;
+
+update();
+
+save();
+
+}
+
+
+function newCounter(){
+
+document.getElementById("counterArea").style.display="none";
+
+document.getElementById("creator").scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+function save(){
+
+let list=JSON.parse(localStorage.getItem("taptrack")||"[]");
+
+let item={
+name:name,
+icon:icon,
+count:count,
+goal:goal
+};
+
+let index=list.findIndex(x=>x.name===name);
+
+if(index>=0)list[index]=item;
+else list.push(item);
+
+localStorage.setItem("taptrack",JSON.stringify(list));
+
+render();
+
+}
+
+
+function render(){
+
+let list=JSON.parse(localStorage.getItem("taptrack")||"[]");
+
+let section=document.getElementById("saved");
+
+let grid=document.getElementById("savedGrid");
+
+if(!list.length){
+
+section.style.display="none";
+
+return;
+
+}
+
+section.style.display="block";
+
+grid.innerHTML="";
+
+list.forEach((x,i)=>{
+
+let card=document.createElement("div");
+
+card.className="saved-card";
+
+card.innerHTML=`
+
+<div class="saved-top">
+
+<div class="saved-icon">${x.icon}</div>
+
+<div class="saved-name">${safe(x.name)}</div>
+
+</div>
+
+<div class="saved-count">${x.count}</div>
+
+<div class="saved-buttons">
+
+<button onclick="load(${i})">Open</button>
+
+<button onclick="removeCounter(${i})">Delete</button>
+
+</div>
+
+`;
+
+grid.appendChild(card);
+
+});
+
+}
+
+
+function load(i){
+
+let list=JSON.parse(localStorage.getItem("taptrack")||"[]");
+
+let x=list[i];
+
+if(!x)return;
+
+name=x.name;
+icon=x.icon;
+count=x.count;
+goal=x.goal;
+
+show();
+
+}
+
+
+function removeCounter(i){
+
+let list=JSON.parse(localStorage.getItem("taptrack")||"[]");
+
+list.splice(i,1);
+
+localStorage.setItem("taptrack",JSON.stringify(list));
+
+render();
+
+}
+
+
+function safe(text){
+
+let d=document.createElement("div");
+
+d.textContent=text;
+
+return d.innerHTML;
+
+}
+
+
+document.addEventListener("keydown",e=>{
+
+if(e.code==="Space" &&
+document.getElementById("counterArea").style.display==="block"){
+
+e.preventDefault();
+
+plus();
+
+}
+
+});
+
+
+render();
+
+</script>
+
+</body>
+</html>
